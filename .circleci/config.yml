@@ -27,3 +27,4 @@ workflows:
           saywhat: Everyone
       - sayhello:
           saywhat: Good night!
+  build:
