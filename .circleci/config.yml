@@ -25,3 +25,5 @@ workflows:
     jobs:
       - sayhello:
           saywhat: Everyone
+      - sayhello:
+          saywhat: Good night!
