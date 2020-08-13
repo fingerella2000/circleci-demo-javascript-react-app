@@ -39,8 +39,4 @@ workflows:
   build:
     jobs:
       - sayhello:
-          saywhat: Everyone
-      - sayagain:
-          saywhat: Good night!
-          requires: 
-            - sayhello
+          saywhat: $CIRCLE_BRANCH
