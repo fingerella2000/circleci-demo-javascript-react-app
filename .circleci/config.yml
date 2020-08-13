@@ -13,6 +13,20 @@ jobs:
           # value for the "saywhat" parameter, it must be
           # passed in manually
           saywhat: << parameters.saywhat >>
+
+  sayagain:
+    parameters:
+      saywhat:
+        description: "To whom shall we say hello?"
+        default: "World"
+        type: string
+    machine: true
+    steps:
+      - say:
+          # Since the command "say" doesn't define a default
+          # value for the "saywhat" parameter, it must be
+          # passed in manually
+          saywhat: << parameters.saywhat >>
 commands:
   say:
     parameters:
@@ -20,11 +34,12 @@ commands:
         type: string
     steps:
       - run: echo "<< parameters.saywhat >>"
+      
 workflows:
   build:
     jobs:
       - sayhello:
           saywhat: Everyone
-      - sayhello:
+      - sayagain:
           saywhat: Good night!
-  build:
+          requires: sayhello
