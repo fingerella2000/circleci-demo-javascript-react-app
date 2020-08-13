@@ -42,4 +42,5 @@ workflows:
           saywhat: Everyone
       - sayagain:
           saywhat: Good night!
-          requires: sayhello
+          requires: 
+            - sayhello
