@@ -1,57 +1,27 @@
 version: 2.1
 jobs:
-  Hello-World:
-    docker:
-      - image: alpine:3.7
+  sayhello:
+    parameters:
+      saywhat:
+        description: "To whom shall we say hello?"
+        default: "World"
+        type: string
+    machine: true
     steps:
-      - run:
-          name: Hello World
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
-  I-Have-Code:
-    docker:
-      - image: alpine:3.7
+      - say:
+          # Since the command "say" doesn't define a default
+          # value for the "saywhat" parameter, it must be
+          # passed in manually
+          saywhat: << parameters.saywhat >>
+commands:
+  say:
+    parameters:
+      saywhat:
+        type: string
     steps:
-      - checkout
-      - run:
-          name: Code Has Arrived
-          command: |
-            ls -al
-            echo '^^^That should look familiar^^^'
-  Run-With-Node:
-    docker:
-      - image: circleci/node:10-browsers
-    steps:
-      - run:
-          name: Running In A Container With Node
-          command: |
-            node -v
-  Now-Complete:
-    docker:
-      - image: alpine:3.7
-    steps:
-      - run:
-          name: Approval Complete
-          command: |
-            echo 'Do work once the approval has completed'
-
+      - run: echo "<< parameters.saywhat >>"
 workflows:
- version: 2
- Example_Workflow:
-   jobs:
-     - Hello-World
-     - I-Have-Code:
-         requires:
-           - Hello-World
-     - Run-With-Node:
-         requires:
-           - Hello-World
-     - Hold-For-Approval:
-         type: approval
-         requires:
-           - Run-With-Node
-           - I-Have-Code
-     - Now-Complete:
-         requires:
-           - Hold-For-Approval
+  build:
+    jobs:
+      - sayhello:
+          saywhat: Everyone
