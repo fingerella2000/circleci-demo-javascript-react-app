@@ -34,7 +34,7 @@ commands:
         type: string
     steps:
       - run: echo "<< parameters.saywhat >>"
-      - run: echo "<< parameters.NAME >>"
+      - run: echo "<< NAME >>"
       
 workflows:
   build:
